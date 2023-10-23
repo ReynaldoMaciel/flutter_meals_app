@@ -1,20 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_meals_app/models/meal.dart';
-import 'package:flutter_meals_app/screens/meal_details.dart';
 import 'package:flutter_meals_app/widgets/meal_item_trait.dart';
 import 'package:transparent_image/transparent_image.dart';
 
 class MealItem extends StatelessWidget {
-  const MealItem({super.key, required this.meal});
+  const MealItem({
+    super.key,
+    required this.meal,
+    required this.onSelectMeal,
+  });
 
   final Meal meal;
-
-  void _selectMeal(BuildContext context) {
-    print('test');
-    Navigator.of(context).push(
-      MaterialPageRoute(builder: (ctx) => MealDetails(meal: meal)),
-    );
-  }
+  final void Function(BuildContext context, Meal meal) onSelectMeal;
 
   String get complexityText {
     return meal.complexity.name[0].toUpperCase() +
@@ -37,7 +34,7 @@ class MealItem extends StatelessWidget {
       elevation: 2,
       child: InkWell(
         onTap: () {
-          _selectMeal(context);
+          onSelectMeal(context, meal);
         },
         child: Stack(
           children: [
